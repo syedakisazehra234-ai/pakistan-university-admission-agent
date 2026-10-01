@@ -7,9 +7,7 @@ from crewai import LLM
 def create_agents():
 
     llm = LLM(
-        model="openai/gpt-oss-120b",
-        custom_openai=True,
-        base_url="https://api.groq.com/openai/v1",
+        model="groq/openai/gpt-oss-120b",
         api_key=os.environ["GROQ_API_KEY"],
         temperature=0.2
     )
