@@ -10,7 +10,7 @@ def create_tasks(
 
     requirements_task = Task(
         description="""
-        Analyze the student's information below.
+        Analyze the student's information.
 
         Student:
         {student}
@@ -18,48 +18,45 @@ def create_tasks(
         Available university programs and requirements:
         {programs}
 
-        Identify the admission requirements that are
-        relevant to this student.
+        Identify the admission requirements relevant
+        to this student.
 
         Do not invent requirements.
         Only use the information provided.
         """,
-
         expected_output="""
         A clear explanation of the relevant admission
         requirements for the student.
         """,
-
         agent=requirements_agent
     )
 
     eligibility_task = Task(
         description="""
-        Determine whether the student meets the requirements
-        identified by the previous agent.
+        Determine whether the student meets the
+        admission requirements.
 
         Student:
         {student}
 
-        Program information:
+        Available programs:
         {programs}
 
-        Use the previous agent's admission requirements
-        analysis as context.
+        Use the previous Admission Requirements Agent
+        result as context.
 
         Explain:
 
         1. Which programs the student appears eligible for.
         2. Which programs the student does not appear eligible for.
-        3. Why.
-        """,
+        3. The reason for each result.
 
+        Do not invent requirements.
+        """,
         expected_output="""
-        A simple eligibility assessment with reasons.
+        A clear eligibility assessment with reasons.
         """,
-
         agent=eligibility_agent,
-
         context=[requirements_task]
     )
 
@@ -77,34 +74,36 @@ def create_tasks(
 
         Consider:
 
-        - student's qualification
+        - qualification
         - percentage
         - subjects
         - interests
 
         Recommend programs that appear suitable.
-        Explain why each program is recommended.
-        """,
+        Explain why each program may be suitable.
 
+        Do not invent admission requirements.
+        """,
         expected_output="""
-        A list of suitable programs with reasons.
+        A list of suitable programs with clear reasons.
         """,
-
         agent=recommendation_agent,
-
         context=[eligibility_task]
     )
 
     advisor_task = Task(
         description="""
-        Create the final admission advice for the student.
+        Create the final admission advice.
 
         Student:
         {student}
 
+        Available programs:
+        {programs}
+
         Use all previous agent results as context.
 
-        Provide a simple report containing:
+        Provide:
 
         1. Student summary
         2. Eligibility results
@@ -114,17 +113,14 @@ def create_tasks(
 
         Do not invent admission requirements.
 
-        Clearly explain that the result is an assessment
+        Clearly state that this is an AI assessment
         based on the supplied information and does not
         guarantee university admission.
         """,
-
         expected_output="""
         A clear and beginner-friendly final admission report.
         """,
-
         agent=advisor_agent,
-
         context=[
             requirements_task,
             eligibility_task,
