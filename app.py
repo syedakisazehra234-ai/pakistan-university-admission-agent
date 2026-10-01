@@ -6,10 +6,6 @@ from crew import create_admission_crew
 from data import PROGRAMS
 
 
-# --------------------------------------------------
-# Streamlit configuration
-# --------------------------------------------------
-
 st.set_page_config(
     page_title="Pakistan University Admission Advisor",
     page_icon="🎓",
@@ -17,17 +13,10 @@ st.set_page_config(
 )
 
 
-# --------------------------------------------------
-# Load Groq API key
-# --------------------------------------------------
-
+# Load Groq API key from Streamlit Secrets
 if "GROQ_API_KEY" in st.secrets:
     os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
-
-# --------------------------------------------------
-# Page title
-# --------------------------------------------------
 
 st.title("🎓 Pakistan University Admission Advisor")
 
@@ -38,10 +27,6 @@ st.write(
 
 st.divider()
 
-
-# --------------------------------------------------
-# Student Information
-# --------------------------------------------------
 
 st.header("Student Information")
 
@@ -66,10 +51,6 @@ percentage = st.number_input(
 )
 
 
-# --------------------------------------------------
-# Subjects
-# --------------------------------------------------
-
 st.subheader("Subjects")
 
 mathematics = st.checkbox("Mathematics")
@@ -79,9 +60,7 @@ biology = st.checkbox("Biology")
 computer_science = st.checkbox("Computer Science")
 
 
-# --------------------------------------------------
-# Interests
-# --------------------------------------------------
+st.subheader("Interests")
 
 interests = st.multiselect(
     "Your Interests",
@@ -99,10 +78,6 @@ interests = st.multiselect(
 )
 
 
-# --------------------------------------------------
-# Admission button
-# --------------------------------------------------
-
 if st.button(
     "🔍 Check Admission",
     use_container_width=True
@@ -111,10 +86,6 @@ if st.button(
     if not name:
         st.warning("Please enter your name.")
         st.stop()
-
-    # ----------------------------------------------
-    # Create student information
-    # ----------------------------------------------
 
     student = {
         "name": name,
@@ -129,10 +100,6 @@ if st.button(
         },
         "interests": interests
     }
-
-    # ----------------------------------------------
-    # Prepare program information
-    # ----------------------------------------------
 
     programs_text = ""
 
@@ -157,10 +124,6 @@ Description:
 ----------------------------
 """
 
-    # ----------------------------------------------
-    # Run Multi-Agent system
-    # ----------------------------------------------
-
     try:
 
         with st.spinner(
@@ -175,10 +138,6 @@ Description:
                     "programs": programs_text
                 }
             )
-
-        # ------------------------------------------
-        # Display result
-        # ------------------------------------------
 
         st.success("Admission analysis completed!")
 
