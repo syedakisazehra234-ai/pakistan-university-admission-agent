@@ -9,7 +9,6 @@ def create_tasks(
 ):
 
     requirements_task = Task(
-
         description="""
         Analyze the student's information below.
 
@@ -35,7 +34,6 @@ def create_tasks(
     )
 
     eligibility_task = Task(
-
         description="""
         Determine whether the student meets the requirements
         identified by the previous agent.
@@ -46,7 +44,11 @@ def create_tasks(
         Program information:
         {programs}
 
+        Use the previous agent's admission requirements
+        analysis as context.
+
         Explain:
+
         1. Which programs the student appears eligible for.
         2. Which programs the student does not appear eligible for.
         3. Why.
@@ -56,11 +58,12 @@ def create_tasks(
         A simple eligibility assessment with reasons.
         """,
 
-        agent=eligibility_agent
+        agent=eligibility_agent,
+
+        context=[requirements_task]
     )
 
     recommendation_task = Task(
-
         description="""
         Recommend suitable university programs.
 
@@ -70,10 +73,10 @@ def create_tasks(
         Available programs:
         {programs}
 
-        Previous eligibility assessment:
-        {eligibility}
+        Use the previous eligibility assessment as context.
 
         Consider:
+
         - student's qualification
         - percentage
         - subjects
@@ -87,25 +90,19 @@ def create_tasks(
         A list of suitable programs with reasons.
         """,
 
-        agent=recommendation_agent
+        agent=recommendation_agent,
+
+        context=[eligibility_task]
     )
 
     advisor_task = Task(
-
         description="""
         Create the final admission advice for the student.
 
         Student:
         {student}
 
-        Admission requirements:
-        {requirements}
-
-        Eligibility assessment:
-        {eligibility}
-
-        Program recommendations:
-        {recommendations}
+        Use all previous agent results as context.
 
         Provide a simple report containing:
 
@@ -126,7 +123,13 @@ def create_tasks(
         A clear and beginner-friendly final admission report.
         """,
 
-        agent=advisor_agent
+        agent=advisor_agent,
+
+        context=[
+            requirements_task,
+            eligibility_task,
+            recommendation_task
+        ]
     )
 
     return (
