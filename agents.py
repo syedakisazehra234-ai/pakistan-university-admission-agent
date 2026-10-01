@@ -1,6 +1,7 @@
+import os
+
 from crewai import Agent
 from crewai import LLM
-import os
 
 
 def create_agents():
@@ -17,12 +18,12 @@ def create_agents():
         role="University Admission Requirements Checker",
         goal=(
             "Check the admission requirements for university "
-            "programs using the information provided."
+            "programs using only the information provided."
         ),
         backstory=(
-            "You understand the Pakistani education system "
-            "including Matric, Intermediate, ICS, FSc "
-            "Pre-Engineering and FSc Pre-Medical."
+            "You understand the Pakistani education system, "
+            "including ICS, FSc Pre-Engineering and "
+            "FSc Pre-Medical."
         ),
         llm=llm,
         verbose=False
@@ -31,8 +32,8 @@ def create_agents():
     eligibility_agent = Agent(
         role="Student Eligibility Checker",
         goal=(
-            "Determine whether a student meets the admission "
-            "requirements provided by the requirements agent."
+            "Determine whether the student meets the "
+            "provided admission requirements."
         ),
         backstory=(
             "You carefully compare a student's qualification, "
@@ -45,8 +46,8 @@ def create_agents():
     recommendation_agent = Agent(
         role="University Program Recommendation Agent",
         goal=(
-            "Recommend suitable university programs based on "
-            "the student's academic background and interests."
+            "Recommend suitable university programs based "
+            "on the student's academic background and interests."
         ),
         backstory=(
             "You help Pakistani students understand which "
