@@ -186,17 +186,12 @@ Description:
 
             crew = create_admission_crew()
 
-            result = crew.kickoff(
-
-                inputs={
-                    "student": str(student),
-                    "programs": programs_text,
-                    "eligibility": "",
-                    "requirements": "",
-                    "recommendations": ""
-                }
-
-            )
+     result = crew.kickoff(
+    inputs={
+        "student": str(student),
+        "programs": programs_text
+    }
+)
 
 
         # -------------------------------------------------
