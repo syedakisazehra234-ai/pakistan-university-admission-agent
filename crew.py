@@ -27,23 +27,19 @@ def create_admission_crew():
     )
 
     crew = Crew(
-
         agents=[
             requirements_agent,
             eligibility_agent,
             recommendation_agent,
             advisor_agent
         ],
-
         tasks=[
             requirements_task,
             eligibility_task,
             recommendation_task,
             advisor_task
         ],
-
         process=Process.sequential,
-
         verbose=False
     )
 
