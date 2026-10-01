@@ -1,2 +1,2 @@
-crewai[litellm]
+crewai[openai]
 streamlit
